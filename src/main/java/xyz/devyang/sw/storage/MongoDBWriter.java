@@ -8,14 +8,15 @@ import org.bson.Document;
 import java.util.*;
 
 /**
+ * Write records into mongodb
+ *
  * Created by YangYu on 10/31/15.
  */
-public class MongoDBWriter implements Observer {
+public class MongoDBWriter {
 
     private MongoClient client;
     private MongoDatabase database;
-    private boolean hasUnwritenData = true;
-    private HashMap<Integer, List<Integer>> map;
+    private HashMap<Integer, List<Integer>> map; // storage for adjacency list
 
     public MongoDBWriter() {
         client = new MongoClient();
@@ -23,16 +24,10 @@ public class MongoDBWriter implements Observer {
         map = new HashMap<Integer, List<Integer>>();
     }
 
-    public void insertOne(Map.Entry entry) {
-        MongoCollection collection = database.getCollection(DBProperty.COLL_USER);
-
-        List<Integer> friendsList = (List) entry.getValue();
-//        friendsList.addAll(;
-        collection.insertOne(new Document(
-                "source", entry.getKey()).append(
-                "friends", friendsList));
-    }
-
+    /**
+     * Format the data into adjacency list and insert
+     *
+     */
     public void insert() {
         int i=0;
         int j=0;
@@ -59,9 +54,31 @@ public class MongoDBWriter implements Observer {
             insertOne(entry);
             j++;
         }
-        System.out.println("Finishing writing.Total: "+j);
+        System.out.println("Finishing writing. Total: "+j);
     }
 
+    /**
+     * Insert one adjacency list into db
+     *
+     * @param entry map entry {1, [2,3,4,5]}
+     */
+    public void insertOne(Map.Entry entry) {
+        MongoCollection collection = database.getCollection(DBProperty.COLL_USER);
+
+        List<Integer> friendsList = (List) entry.getValue();
+        collection.insertOne(new Document(
+                "source", entry.getKey()).append(
+                "friends", friendsList));
+    }
+
+    /**
+     * Insert one edge into db
+     * Slow for large scala of data
+     *
+     * @param pair edge pair [1,2]
+     *
+     * @return
+     */
     private boolean insertPair(int[] pair) {
         if (pair.length!=2) {
             return false;
@@ -77,18 +94,12 @@ public class MongoDBWriter implements Observer {
                     "friends", new ArrayList<Integer>()
             ));
         }
-//        return collection.count(new Document("source", pair[0]).append("friends", new Document("$elemMatch", new Document("eq", pair[1]))))>0;
         collection.findOneAndUpdate(new Document("source", pair[0]), new Document("$push", new Document("friends", pair[1])));
         collection.findOneAndUpdate(new Document("source", pair[1]), new Document("$push", new Document("friends", pair[0])));
         return true;
     }
 
-    public MongoDatabase getDatabase() {
+    public final MongoDatabase getDatabase() {
         return database;
-    }
-
-    public void update(Observable o, Object arg) {
-        this.hasUnwritenData = false;
-        System.out.println("Writer get notified");
     }
 }

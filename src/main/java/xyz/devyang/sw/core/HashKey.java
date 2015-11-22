@@ -1,14 +1,14 @@
 package xyz.devyang.sw.core;
 
 /**
- * Path key
+ * key for shortest path
  *
  * Created by YangYu on 11/4/15.
  */
 public class HashKey {
 
-    private final Node x;
-    private final Node y;
+    private final Node x; // source
+    private final Node y; // destination
 
     public HashKey(Node x, Node y) {
         this.x = x;

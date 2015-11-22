@@ -9,9 +9,6 @@ import java.util.List;
 public class RuntimeCache {
 
     // Graph storage in memory
-//    public static HashMap<Node, Node> ADJLIST = new HashMap<Node, Node>();
-
-    // Graph storage in memory
     public static Graph GRAPH = new Graph();
 
     // Search result

@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Graph object
+ *
  * Created by YangYu on 11/21/15.
  */
 public class Graph {
@@ -55,6 +57,9 @@ public class Graph {
         return edges;
     }
 
+    /**
+     * Set all the node as not visited
+     */
     public void reset() {
         for (Node node : nodes.values()) {
             node.setIsVisited(false);

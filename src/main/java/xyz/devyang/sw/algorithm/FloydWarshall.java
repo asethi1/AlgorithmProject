@@ -4,6 +4,8 @@ import xyz.devyang.sw.core.Edge;
 import xyz.devyang.sw.core.Graph;
 
 /**
+ * Floyd-Warshall algorithm implementation
+ *
  * Created by YangYu on 11/22/15.
  */
 public class FloydWarshall {

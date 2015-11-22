@@ -5,10 +5,11 @@ import xyz.devyang.sw.core.*;
 import java.util.*;
 
 /**
+ * Breadth first search algorithm implementation
+ *
  * Created by YangYu on 11/22/15.
  */
 public class BreadthFirstSearch {
-
 
     private static final int INFINITY = Integer.MAX_VALUE;
     private boolean[] marked;  // marked[v] = is there an s-v path
@@ -16,6 +17,7 @@ public class BreadthFirstSearch {
     private int[] distTo;      // distTo[v] = number of edges shortest s-v path
     private HashMap<Node, Set<Node>> adjList;   // adjacency list format
     private Node source = null;
+    private boolean isFinished = false;
 
     /**
      * Computes the shortest path between the source vertex <tt>s</tt>
@@ -70,6 +72,7 @@ public class BreadthFirstSearch {
                 }
             }
         }
+        this.isFinished = true;
     }
 
     /**
@@ -110,71 +113,6 @@ public class BreadthFirstSearch {
         return path;
     }
 
-
-    // check optimality conditions for single source
-    private boolean check(Graph G, Node s) {
-
-        // check that the distance of s = 0
-        if (distTo[s.getId()] != 0) {
-            System.out.println("distance of source " + s + " to itself = " + distTo[s.getId()]);
-            return false;
-        }
-
-        // check that for each edge v-w dist[w] <= dist[v] + 1
-        // provided v is reachable from s
-        for (int v = 0; v < G.getNodes().size(); v++) {
-            Iterator<Node> it = adjList.get(new Node(v)).iterator();
-            while (it.hasNext()) {
-                int w = it.next().getId();
-                if (hasPathTo(v) != hasPathTo(w)) {
-                    System.out.println("edge " + v + "-" + w);
-                    System.out.println("hasPathTo(" + v + ") = " + hasPathTo(v));
-                    System.out.println("hasPathTo(" + w + ") = " + hasPathTo(w));
-                    return false;
-                }
-                if (hasPathTo(v) && (distTo[w] > distTo[v] + 1)) {
-                    System.out.println("edge " + v + "-" + w);
-                    System.out.println("distTo[" + v + "] = " + distTo[v]);
-                    System.out.println("distTo[" + w + "] = " + distTo[w]);
-                    return false;
-                }
-
-            }
-        }
-
-        // check that v = edgeTo[w] satisfies distTo[w] + distTo[v] + 1
-        // provided v is reachable from s
-        for (int w = 0; w < G.getNodes().size(); w++) {
-            if (!hasPathTo(w) || w == s.getId()) continue;
-            int v = edgeTo[w];
-            if (distTo[w] != distTo[v] + 1) {
-                System.out.println("shortest path edge " + v + "-" + w);
-                System.out.println("distTo[" + v + "] = " + distTo[v]);
-                System.out.println("distTo[" + w + "] = " + distTo[w]);
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Reset to be initiation status
-     */
-    public void reset() {
-        marked = new boolean[marked.length];
-        distTo = new int[distTo.length];
-        edgeTo = new int[edgeTo.length];
-    }
-
-    public final int[] getEdgeTo() {
-        return edgeTo;
-    }
-
-    public final int[] getDistTo() {
-        return distTo;
-    }
-
     /**
      * Return the path from source to node
      * @param node destination
@@ -193,71 +131,22 @@ public class BreadthFirstSearch {
     }
 
     /**
-     * Computes the shortest path between any one of the source vertices in <tt>sources</tt>
-     * and every other vertex in graph <tt>G</tt>.
-     *
-     * @param G       the graph
-     * @param sources the source vertices
+     * Reset to be initiation status
      */
-    /*
-    public BreadthFirstSearch(Graph G, Iterable<Integer> sources) {
-        marked = new boolean[G.getNodes().size()];
-        distTo = new int[G.getNodes().size()];
-        edgeTo = new int[G.getNodes().size()];
-        for (int v = 0; v < G.getNodes().size(); v++)
-            distTo[v] = INFINITY;
-        bfs(G, sources);
-    }
-
-    // breadth-first search from multiple sources
-    public void execute(Graph G, Iterable<Integer> sources) {
-        Queue<Integer> q = new LinkedList<Integer>();
-        for (int s : sources) {
-            marked[s] = true;
-            distTo[s] = 0;
-            q.add(s);
-        }
-        while (!q.isEmpty()) {
-            int v = q.poll();
-            Iterator<Node> it = adjList.get(new Node(v)).iterator();
-            while (it.hasNext()) {
-                int w = it.next().getId();
-                if (!marked[w]) {
-                    edgeTo[w] = v;
-                    distTo[w] = distTo[v] + 1;
-                    marked[w] = true;
-                    q.add(w);
-                }
-            }
+    public void reset() {
+        if (isFinished) {
+            marked = new boolean[marked.length];
+            distTo = new int[distTo.length];
+            edgeTo = new int[edgeTo.length];
+            this.isFinished = false;
         }
     }
-    */
 
+    public final int[] getEdgeTo() {
+        return edgeTo;
+    }
 
-
-    /**
-     * Unit tests the <tt>BreadthFirstPaths</tt> data type.
-     */
-//    public static void main(String[] args) {
-//        In in = new In(args[0]);
-//        Graph G = new Graph(in);
-//        // StdOut.println(G);
-//
-//        int s = Integer.parseInt(args[1]);
-//        BreadthFirstPaths bfs = new BreadthFirstPaths(G, s);
-//
-//        for (int v = 0; v < G.V(); v++) {
-//            if (bfs.hasPathTo(v)) {
-//                StdOut.printf("%d to %d (%d):  ", s, v, bfs.distTo(v));
-//                for (int x : bfs.pathTo(v)) {
-//                    if (x == s) StdOut.print(x);
-//                    else StdOut.print("-" + x);
-//                }
-//                StdOut.println();
-//            } else {
-//                StdOut.printf("%d to %d (-):  not connected\n", s, v);
-//            }
-//
-//        }
-//    }
+    public final int[] getDistTo() {
+        return distTo;
+    }
 }

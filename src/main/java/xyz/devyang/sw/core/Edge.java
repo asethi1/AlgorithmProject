@@ -1,6 +1,8 @@
 package xyz.devyang.sw.core;
 
 /**
+ * Edges in graph
+ *
  * Created by YangYu on 11/21/15.
  */
 public class Edge {

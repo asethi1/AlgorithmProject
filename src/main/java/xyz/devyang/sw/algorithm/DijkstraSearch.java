@@ -7,6 +7,8 @@ import xyz.devyang.sw.core.Node;
 import java.util.*;
 
 /**
+ * Dijkstra algorithm implementation
+ *
  * Created by YangYu on 11/21/15.
  */
 public class DijkstraSearch {
@@ -19,6 +21,7 @@ public class DijkstraSearch {
     private Set<Node> unSettledNodes;
     private Map<Node, Node> predecessors;
     private Map<Node, Integer> distance;
+    private boolean isFinished = false;
 
     public DijkstraSearch(Graph graph) {
         // create a copy of the array so that we can operate on this array
@@ -39,6 +42,7 @@ public class DijkstraSearch {
             unSettledNodes.remove(node);
             findMinimalDistances(node);
         }
+        this.isFinished = true;
     }
 
     private void findMinimalDistances(Node node) {
@@ -128,9 +132,12 @@ public class DijkstraSearch {
      * reset to initialization status
      */
     public void reset() {
-        settledNodes.clear();
-        unSettledNodes.clear();
-        distance.clear();
-        predecessors.clear();
+        if (isFinished) {
+            settledNodes.clear();
+            unSettledNodes.clear();
+            distance.clear();
+            predecessors.clear();
+            this.isFinished = false;
+        }
     }
 }

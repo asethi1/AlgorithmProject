@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 public class StaticCache {
 
+    // store the edge pair read from dataset
     public static ConcurrentLinkedDeque<int[]> EADGE_CACHE = new ConcurrentLinkedDeque<int[]>();
 
 }

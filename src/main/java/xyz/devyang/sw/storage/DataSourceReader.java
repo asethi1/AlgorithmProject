@@ -3,7 +3,6 @@ package xyz.devyang.sw.storage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Observable;
 import java.util.Scanner;
 
 /**
@@ -11,11 +10,10 @@ import java.util.Scanner;
  *
  * Created by YangYu on 10/31/15.
  */
-public class DataSourceReader extends Observable {
+public class DataSourceReader {
 
     private Scanner scanner;
     private boolean isFinished = false;
-    //
     private int recordSize = 0;
 
     public DataSourceReader(File file) throws FileNotFoundException {
@@ -42,7 +40,6 @@ public class DataSourceReader extends Observable {
             lineNum++;
         }
         this.isFinished = true;
-//        notifyObservers();
         System.out.println("Reading Finished, total: " + recordSize);
         return this.recordSize;
     }
