@@ -4,9 +4,12 @@ import xyz.devyang.sw.algorithm.BreadthFirstSearch;
 import xyz.devyang.sw.algorithm.DijkstraSearch;
 import xyz.devyang.sw.algorithm.FloydWarshall;
 
+import java.util.Date;
 import java.util.List;
 
 /**
+ * All pairs shortest path search
+ * <p/>
  * Created by YangYu on 11/3/15.
  */
 public class SearchEngine {
@@ -38,8 +41,10 @@ public class SearchEngine {
                 }
             }
         }
-        System.out.println("length: " + length + " counter: " + RuntimeCache.PATH.size());
-        System.out.println("degree:" + (double) length / RuntimeCache.PATH.size());
+        System.out.println("Serialize to path.dat at " + new Date());
+        Serialization.writeObject(RuntimeCache.PATH, "path.dat");
+        System.out.println("Length: " + length + " Counter: " + RuntimeCache.PATH.size());
+        System.out.println("Degree:" + (double) length / RuntimeCache.PATH.size());
     }
 
     public void bfsSearch() {
@@ -60,9 +65,10 @@ public class SearchEngine {
                 }
             }
         }
-
-        System.out.println("length: " + length + " counter: " + RuntimeCache.PATH.size());
-        System.out.println("degree:" + (double) length / RuntimeCache.PATH.size());
+        System.out.println("Serialize to path.dat at " + new Date());
+        Serialization.writeObject(RuntimeCache.PATH, "path.dat");
+        System.out.println("Length: " + length + " Counter: " + RuntimeCache.PATH.size());
+        System.out.println("Degree:" + (double) length / RuntimeCache.PATH.size());
     }
 
     public void fwSearch() {
