@@ -1,11 +1,13 @@
 package xyz.devyang.sw.core;
 
+import java.io.Serializable;
+
 /**
  * Vertex in graph
  *
  * Created by YangYu on 11/2/15.
  */
-public class Node {
+public class Node implements Serializable {
 
     private int id;
     private boolean isVisited = false;

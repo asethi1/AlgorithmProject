@@ -50,4 +50,11 @@ public class SearchEngineTest {
         engine.bfsSearch();
         System.out.println("Test BreadthFirstSearch Search stop at " + new Date());
     }
+
+    @Test
+    public void testFwSearch() throws Exception {
+        System.out.println("Test FloydWarshall Search Search start at " + new Date());
+        engine.fwSearch();
+        System.out.println("Test FloydWarshall Search Search stop at " + new Date());
+    }
 }

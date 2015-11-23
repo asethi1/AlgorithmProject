@@ -2,6 +2,7 @@ package xyz.devyang.sw.core;
 
 import xyz.devyang.sw.algorithm.BreadthFirstSearch;
 import xyz.devyang.sw.algorithm.DijkstraSearch;
+import xyz.devyang.sw.algorithm.FloydWarshall;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class SearchEngine {
 
     private DijkstraSearch dijkstra;
     private BreadthFirstSearch bfs;
+    private FloydWarshall fw;
 
     public SearchEngine() {
     }
@@ -63,5 +65,12 @@ public class SearchEngine {
         System.out.println("degree:" + (double) length / RuntimeCache.PATH.size());
     }
 
+    public void fwSearch() {
+        fw = new FloydWarshall(RuntimeCache.GRAPH);
+        int length = 0;
+        fw.execute();
+//        System.out.println("length: " + length + " counter: " + RuntimeCache.PATH.size());
+//        System.out.println("degree:" + (double) length / RuntimeCache.PATH.size());
+    }
 
 }

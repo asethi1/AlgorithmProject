@@ -1,11 +1,13 @@
 package xyz.devyang.sw.core;
 
+import java.io.Serializable;
+
 /**
  * key for shortest path
  *
  * Created by YangYu on 11/4/15.
  */
-public class HashKey {
+public class HashKey implements Serializable {
 
     private final Node x; // source
     private final Node y; // destination
