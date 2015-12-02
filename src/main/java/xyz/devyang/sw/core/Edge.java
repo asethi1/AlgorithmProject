@@ -1,11 +1,13 @@
 package xyz.devyang.sw.core;
 
+import java.io.Serializable;
+
 /**
  * Edges in graph
  *
  * Created by YangYu on 11/21/15.
  */
-public class Edge {
+public class Edge implements Serializable {
 
     private Node source;
     private Node destination;
@@ -32,6 +34,13 @@ public class Edge {
         this.source = source;
         this.destination = destination;
         this.weight = weight;
+    }
+
+    public Edge exchange() {
+        Node temp = source;
+        this.source = destination;
+        this.destination = temp;
+        return this;
     }
 
     public Node getSource() {

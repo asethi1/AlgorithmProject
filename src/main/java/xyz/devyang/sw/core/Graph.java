@@ -1,5 +1,6 @@
 package xyz.devyang.sw.core;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,7 +11,9 @@ import java.util.Set;
  *
  * Created by YangYu on 11/21/15.
  */
-public class Graph {
+public class Graph implements Serializable {
+
+    public final static long serialVersionUID = 1L;
 
     private Map<Integer, Node> nodes;
     private Set<Edge> edges;
@@ -40,7 +43,7 @@ public class Graph {
     }
 
     public Graph removeNode(Node node) {
-        this.nodes.remove(node);
+        this.nodes.remove(node.getId());
         return this;
     }
 

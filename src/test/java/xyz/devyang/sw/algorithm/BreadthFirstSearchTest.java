@@ -44,13 +44,13 @@ public class BreadthFirstSearchTest {
 
     @Test
     public void testExecute() throws Exception {
-        bfs.execute(graph, graph.getNodes().get(1));
+        bfs.execute(graph.getNodes().get(1));
         Assert.assertEquals(4, bfs.getDistTo()[graph.getNodes().get(6).getId()]);
     }
 
     @Test
     public void testGetPathTo() throws Exception {
-        bfs.execute(graph, graph.getNodes().get(1));
+        bfs.execute(graph.getNodes().get(1));
         String s = Arrays.toString(bfs.getPathTo(graph.getNodes().get(6)).toArray());
         Assert.assertEquals("[1, 2, 3, 4, 6]", s);
     }

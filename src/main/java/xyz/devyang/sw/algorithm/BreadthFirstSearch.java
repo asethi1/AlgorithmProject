@@ -1,7 +1,9 @@
 package xyz.devyang.sw.algorithm;
 
 import xyz.devyang.sw.core.*;
+import xyz.devyang.sw.storage.Serialization;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -18,6 +20,9 @@ public class BreadthFirstSearch {
     private HashMap<Node, Set<Node>> adjList;   // adjacency list format
     private Node source = null;
     private boolean isFinished = false;
+    private Node lastVisited = null;
+    private Graph G;
+    private Graph x;            // SCC
 
     /**
      * Computes the shortest path between the source vertex <tt>s</tt>
@@ -26,11 +31,14 @@ public class BreadthFirstSearch {
      * @param G the graph
      */
     public BreadthFirstSearch(Graph G) {
-        marked = new boolean[GraphProperty.NODE_SIZE+1];
-        distTo = new int[GraphProperty.NODE_SIZE+1];
-        edgeTo = new int[GraphProperty.NODE_SIZE+1];
+        this.G = G;
+        this.x = new Graph();
+        marked = new boolean[GProperty.MAXID+1];
+        distTo = new int[GProperty.MAXID+1];
+        edgeTo = new int[GProperty.MAXID+1];
         adjList = new HashMap<Node, Set<Node>>();
-        for (Edge edge : G.getEdges()) {
+        for (Edge edge : this.G.getEdges()) {
+//            x.addEdge(edge);
             Node source = edge.getSource();
             Node dest = edge.getDestination();
             if (!adjList.containsKey(source)) {
@@ -47,10 +55,9 @@ public class BreadthFirstSearch {
     /**
      * Breadth-first search from a single source
      *
-     * @param G graph
      * @param s source
      */
-    public void execute(Graph G, Node s) {
+    public void execute(Node s) {
         this.source = s;
         Queue<Integer> q = new LinkedList<Integer>();
         for (int v = 0; v < G.getNodes().size(); v++)
@@ -61,6 +68,7 @@ public class BreadthFirstSearch {
 
         while (!q.isEmpty()) {
             int v = q.poll();
+            lastVisited = G.getNodes().get(v);
             Iterator<Node> it = adjList.get(new Node(v)).iterator();
             while (it.hasNext()) {
                 int w = it.next().getId();
@@ -73,6 +81,41 @@ public class BreadthFirstSearch {
             }
         }
         this.isFinished = true;
+    }
+
+    public void scc(Node s) {
+        this.source = s;
+        Queue<Integer> q = new LinkedList<Integer>();
+        for (int v = 0; v < G.getNodes().size(); v++)
+            distTo[v] = INFINITY;
+        distTo[s.getId()] = 0;
+        marked[s.getId()] = true;
+        s.setIsVisited(true);
+        q.add(s.getId());
+        x.addNode(s);
+
+        while (!q.isEmpty()) {
+            int v = q.poll();
+            lastVisited = G.getNodes().get(v);
+            lastVisited.setIsVisited(true);
+            G.removeNode(lastVisited);
+            Iterator<Node> it = adjList.get(new Node(v)).iterator();
+            while (it.hasNext()) {
+                Node next = it.next();
+                int w = next.getId();
+                if (!marked[w]) {
+                    edgeTo[w] = v;
+                    distTo[w] = distTo[v] + 1;
+                    marked[w] = true;
+                    x.addNode(next);
+                    q.add(w);
+                }
+            }
+        }
+        this.isFinished = true;
+        System.out.println("Vertices: "+x.getNodes().size()+" Edges: "+x.getEdges().size());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        Serialization.writeObject(x, "scc/" + x.getNodes().size() + "-" + format.format(new Date()) + ".dat");
     }
 
     /**
@@ -123,7 +166,11 @@ public class BreadthFirstSearch {
         List path = new LinkedList();
         path.add(node);
         while (node.getId()!=source.getId()) {
+            int id = node.getId();
             node = graph.getNodes().get(edgeTo[node.getId()]);
+            if (node == null) {
+                return null;
+            }
             path.add(node);
         }
         Collections.reverse(path);
@@ -135,9 +182,9 @@ public class BreadthFirstSearch {
      */
     public void reset() {
         if (isFinished) {
-            marked = new boolean[marked.length];
-            distTo = new int[distTo.length];
-            edgeTo = new int[edgeTo.length];
+            Arrays.fill(marked, false);
+            Arrays.fill(distTo, 0);
+            Arrays.fill(edgeTo, 0);
             this.isFinished = false;
         }
     }
@@ -148,5 +195,9 @@ public class BreadthFirstSearch {
 
     public final int[] getDistTo() {
         return distTo;
+    }
+
+    public Node getLastVisited() {
+        return this.lastVisited;
     }
 }

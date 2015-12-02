@@ -1,4 +1,4 @@
-package xyz.devyang.sw.core;
+package xyz.devyang.sw.storage;
 
 import java.io.*;
 
@@ -20,16 +20,21 @@ public class Serialization {
     }
 
     public static Object readObject(String filename) {
+        Object obj = null;
         try {
             FileInputStream inputStream = new FileInputStream(filename);
             ObjectInputStream objIn = new ObjectInputStream(inputStream);
-            return objIn.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
+            obj = objIn.readObject();
+            objIn.close();
+            inputStream.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return null;
+        return obj;
     }
 
 }

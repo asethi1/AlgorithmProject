@@ -8,7 +8,7 @@ package xyz.devyang.sw.storage;
 public class DBProperty {
 
     // Database name
-    public static final String DBNAME = "sw";
+    public static final String DBNAME = "sw1";
 
     // User Collection name
     public static final String COLL_USER = "user";

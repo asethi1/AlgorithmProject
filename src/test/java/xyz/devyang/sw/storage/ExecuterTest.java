@@ -10,7 +10,7 @@ public class ExecuterTest {
     @Test
     public void testStart() throws Exception {
 
-        Executer executer = new Executer(getClass().getResourceAsStream("/dataset/fb-connection-test2"));
+        Executer executer = new Executer(getClass().getResourceAsStream("/dataset/fb-connection-test3"));
         executer.start();
 
     }

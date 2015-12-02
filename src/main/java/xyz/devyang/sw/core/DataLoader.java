@@ -7,6 +7,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import xyz.devyang.sw.storage.DBProperty;
+import xyz.devyang.sw.storage.Serialization;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +21,7 @@ public class DataLoader {
 
     private MongoClient client;
     private MongoDatabase database;
+    private String serializedObject;
 
     // whether data loading is finished
     private boolean isFinished = false;
@@ -27,6 +29,19 @@ public class DataLoader {
     public DataLoader() {
         client = new MongoClient();
         database = client.getDatabase(DBProperty.DBNAME);
+    }
+
+    public DataLoader(String serializedObject) {
+        this.serializedObject = serializedObject;
+    }
+
+    public void loadFromSerialization() {
+        Graph graph = (Graph) Serialization.readObject(serializedObject);
+        RuntimeCache.GRAPH = graph;
+        System.out.println("Finish loading data at " + new Date()
+                + "\nNodes: " + RuntimeCache.GRAPH.getNodes().size()
+                + "\nEdges: " + RuntimeCache.GRAPH.getEdges().size()
+                + "\n*********************************************");
     }
 
     public void load() {
@@ -51,8 +66,8 @@ public class DataLoader {
         // Make data loading as finished
         this.isFinished = true;
         System.out.println("Finish loading data at " + new Date()
-                + "\nNodes: "+RuntimeCache.GRAPH.getNodes().size()
-                + "\nEdges: "+RuntimeCache.GRAPH.getEdges().size()
+                + "\nNodes: " + RuntimeCache.GRAPH.getNodes().size()
+                + "\nEdges: " + RuntimeCache.GRAPH.getEdges().size()
                 + "\n*********************************************");
     }
 

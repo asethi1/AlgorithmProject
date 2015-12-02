@@ -2,7 +2,6 @@ package xyz.devyang.sw.algorithm;
 
 import xyz.devyang.sw.core.Edge;
 import xyz.devyang.sw.core.Graph;
-import xyz.devyang.sw.core.GraphProperty;
 
 /**
  * Floyd-Warshall algorithm implementation
@@ -17,9 +16,9 @@ public class FloydWarshall {
     public static final int INFINITY = Byte.MAX_VALUE;
 
     public FloydWarshall(Graph graph) {
-        distancematrix = new short[GraphProperty.NODE_SIZE + 1][GraphProperty.NODE_SIZE + 1];
+        distancematrix = new short[graph.getNodes().size()+1][graph.getNodes().size()+1];
         this.numberofvertices = graph.getNodes().size();
-        adjacencymatrix = new byte[GraphProperty.NODE_SIZE + 1][GraphProperty.NODE_SIZE + 1];
+        adjacencymatrix = new byte[graph.getNodes().size()+1][graph.getNodes().size()+1];
         for (Edge edge : graph.getEdges()) {
             adjacencymatrix[edge.getSource().getId()][edge.getDestination().getId()] = 1;
             adjacencymatrix[edge.getDestination().getId()][edge.getSource().getId()] = 1;

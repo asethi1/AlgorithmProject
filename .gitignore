@@ -3,3 +3,6 @@ SmallWorld.iml
 target/*
 *.dat
 .gitignore
+META-INF/application.xml
+out/artifacts/SmallWorld_jar/SmallWorld.jar
+scc/scc.zip
