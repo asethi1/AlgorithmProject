@@ -68,7 +68,7 @@ public class SCCFinder {
 
     public void getDegree(String serializedObject) {
         final Graph graph = (Graph) Serialization.readObject(serializedObject);
-        final HashMap<Integer, List> degree = new HashMap<>();
+        final HashMap<Integer, List> degree = new HashMap<Integer, List>();
         for (final Node node : graph.getNodes().values()) {
             FindIterable<Document> it = database.getCollection(DBProperty.COLL_USER).
                     find(new Document().append("source", node.getId())).limit(1);

@@ -86,9 +86,9 @@ public class SearchEngine {
 //        System.out.println("degree:" + (double) length / RuntimeCache.PATH.size());
     }
 
-    public void findLongestPath() {
+    public void findLongestPath(Node node) {
         bfs = new BreadthFirstSearch(RuntimeCache.GRAPH);
-        bfs.execute(RuntimeCache.GRAPH.getNodes().get(1));
+        bfs.execute(node);
         System.out.println("Start From: "+1);
         Node node1 = bfs.getLastVisited();
         System.out.println("First farthest: "+node1);
@@ -99,6 +99,18 @@ public class SearchEngine {
         List path = bfs.getPathTo(node2);
         System.out.println("Path degree: "+(path.size()-1));
         System.out.println("Path:\n"+Arrays.toString(path.toArray()));
+    }
+
+    public HashMap<String, Object> oneTimeBFS(Node node) {
+        bfs = new BreadthFirstSearch(RuntimeCache.GRAPH);
+        bfs.execute(node);
+        Node last = bfs.getLastVisited();
+        List path = bfs.getPathTo(last);
+        HashMap<String, Object> map = new HashMap();
+        map.put("start", node);
+        map.put("end", last);
+        map.put("path", path);
+        return map;
     }
 
 
@@ -133,7 +145,7 @@ public class SearchEngine {
         loader.loadFromSerialization();
         SearchEngine engine = new SearchEngine();
         System.out.println("Test Breadth First Search start at " + new Date());
-        engine.bfsSearch();
+        engine.oneTimeBFS(RuntimeCache.GRAPH.getNodes().get(1));
         System.out.println("Test Breadth First Search stop at " + new Date());
     }
 
