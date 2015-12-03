@@ -154,9 +154,7 @@ and open the template in the editor.
                                     <p>We have taken Facebook’s anonymized data set from
                                         http://socialnetworks.mpi-sws.org/data-wosn2009.html with a size of 10.4MB. Each
                                         line contains two anonymized user identifiers, meaning the second user appeared
-                                        in the first user's friend list. The graph contains 65,000 nodes representing
-                                        users and 1,600,000 undirected edges (with no weights) representing the
-                                        connections between users.
+                                        in the first user's friend list. The graph contains 63,729 nodes representing users and 817,033 undirected edges (with no weights) representing the connections between users.
                                         <br>
                                         <br>
 
@@ -193,8 +191,13 @@ and open the template in the editor.
                                     </p></div>
                                 <br><br>
 
-                                <div align="middle">
-                                    <div id="chartContainer" style="height: 300px; width: 35%; border: solid;"></div>
+                                <div align="middle"><div id="chartContainer" style="height: 300px; width: 35%; border: solid;"></div>
+                                    <p class="products"><br>
+                                        Largest SCC:<br>
+                                        Total number of nodes: 63392<br>
+                                        Total number of edges: 816831<br>
+                                        Average degree: 25.77<br>
+                                    </p>
                                 </div>
                             </div>
 
