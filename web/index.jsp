@@ -250,11 +250,11 @@ and open the template in the editor.
                                     <form name="form" id="myform" method="POST" action="/search">
                                         <p>Enter the number id of the node from where you want to start calculating the
                                             diameter (required) :
-                                            <input type="number" name="startVertex"><br>
+                                            <input type="number" name="startVertex" style="color: #000000" ><br>
                                         </p>
 
                                         <p>Enter the number of times you want to run BFS on the graph (optional) * :
-                                            <input type="text" name="bfsNoOfTimes"><br></p>
+                                            <input type="text" name="bfsNoOfTimes" style="color: #000000" ><br></p>
 
                                         <p><input class="btn btn-large btn-primary" type="submit" value="Calculate"></p>
 
