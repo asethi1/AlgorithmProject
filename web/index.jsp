@@ -18,8 +18,8 @@ and open the template in the editor.
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif" rel="stylesheet" type="text/css">
@@ -37,37 +37,50 @@ and open the template in the editor.
     <script src="http://codepen.io/assets/libs/fullpage/jquery.js"></script>
     <script src="js/index.js"></script>
     <script src="js/carousel.js"></script>
+    <script type="text/javascript" src="js/vis.js"></script>
+  <link type="text/css" rel="stylesheet" href="css/vis.css">
 
-    <script type="text/javascript">
-        window.onload = function () {
-            var chart = new CanvasJS.Chart("chartContainer",
-                    {
-                        title: {
-                            text: "Main Vs Other SCC's"
-                        },
-                        data: [
-                            {
-                                type: "pie",
-                                dataPoints: [
-                                    {y: 97.5, indexLabel: "Main SCC - 97.5%"},
-                                    {y: 2.5, indexLabel: "Other SCC's - 2.5 %"}
-                                ]
+  <script src="js/WorldCup2014.js"></script>
 
-                            }
-                        ]
-                    });
+  <style type="text/css">
+    #mynetwork {
+      width: 600px;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+  </style>
+  
+     <script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+        text: "Main Vs Other SCC's"
+      },
+      data: [
+      {
+       type: "pie",
+       dataPoints: [
+       {  y: 97.5, indexLabel: "Main SCC - 97.5%" },
+       {  y: 2.5, indexLabel: "Other SCC's - 2.5 %" }
+       ]
+       
+     }
+     ]
+   });
 
-            chart.render();
-        }
-    </script>
-
-    <script type="text/javascript" src="js/canvasjs.min.js"></script>
+    chart.render();
+  }
+  </script>
+  
+   <script type="text/javascript" src="js/canvasjs.min.js"></script>
 
     <!--scrolling animation-->
     <script src="js/wow.min.js"></script>
     <script>
         new WOW().init();
     </script>
+
 
 
 </head>
@@ -106,19 +119,23 @@ and open the template in the editor.
     <div>
         <a id="Home"></a>
 
-        <div class="bs-example">
+<!--        <div class="bs-example">
             <div id="myCarousel" class="carousel slide" data-interval="2000" data-ride="carousel">
-                <!-- Carousel items -->
+                 Carousel items 
                 <div class="carousel-inner">
                     <div class="item active">
                         <img class="img-responsive center-block" src="Images/graph.PNG">
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
+<div style="background-color: #000000;" align="middle">
+                        <!--<img src="Images/graph.PNG" width="550" height="470" style="background-color: #000000; border: none">-->
+                        <div id="mynetwork" style=" border: none"></div>
+                    </div>
 
         <div class="row">
-            <div class="wow bounceInUp" style="visibility: visible; animation-name: bounceInUp;">
+            <!--<div class="wow bounceInUp" style="visibility: visible; animation-name: bounceInUp;">-->
                 <a id="What_We_Offer"></a>
 
                 <div class="row" id="WhatWeOffer">
@@ -191,14 +208,7 @@ and open the template in the editor.
                                     </p></div>
                                 <br><br>
 
-                                <div align="middle"><div id="chartContainer" style="height: 300px; width: 35%; border: solid;"></div>
-                                    <p class="products"><br>
-                                        Largest SCC:<br>
-                                        Total number of nodes: 63392<br>
-                                        Total number of edges: 816831<br>
-                                        Average degree: 25.77<br>
-                                    </p>
-                                </div>
+                                <div align="middle"><div id="chartContainer" style="height: 300px; width: 35%; border: solid;"></div></div>
                             </div>
 
                             <div class="row">
@@ -218,6 +228,13 @@ and open the template in the editor.
 
                                 <div align="middle">
                                     <img src="Images/indegreeVSNodes.png" width="850" height="400" align="middle">
+                                
+                                    <p class="products"><br>
+                                        Largest SCC:<br>
+                                        Total number of nodes: 63392<br>
+                                        Total number of edges: 816831<br>
+                                        Average degree: 25.77<br>
+                                    </p>
                                 </div>
                             </div>
 
@@ -373,6 +390,64 @@ and open the template in the editor.
         $(window).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
     }
 </script>
+
+<script type="text/javascript">
+                          var network;
+
+
+                          function redrawAll() {
+                            // remove positoins
+                            for (var i = 0; i < nodes.length; i++) {
+                              delete nodes[i].x;
+                              delete nodes[i].y;
+                            }
+
+                            // create a network
+                            var container = document.getElementById('mynetwork');
+                            var data = {
+                              nodes: nodes,
+                              edges: edges
+                            };
+                            var options = {
+                              nodes: {
+                                shape: 'dot',
+                                scaling: {
+                                  min: 3,
+                                  max: 10
+                                },
+                                font: {
+                                  size: 12,
+                                  face: 'Tahoma'
+                                }
+                              },
+                              edges: {
+                                width: 0.15,
+                                color: {inherit: 'from'},
+                                smooth: {
+                                  type: 'continuous'
+                                }
+                              },
+                              physics: {
+                                stabilization: false,
+                                barnesHut: {
+                                  gravitationalConstant: -80000,
+                                  springConstant: 0.001,
+                                  springLength: 200
+                                }
+                              },
+                              interaction: {
+                                tooltipDelay: 200,
+                                hideEdgesOnDrag: true
+                              }
+                            };
+
+                            // Note: data is coming from ./datasources/WorldCup2014.js
+                            network = new vis.Network(container, data, options);
+                          }
+
+                          redrawAll()
+                        </script>
+
 
 </body>
 </html>
