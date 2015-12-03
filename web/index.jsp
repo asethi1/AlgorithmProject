@@ -1,16 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: YangYu
-  Date: 10/29/15
-  Time: 10:56 PM
-  To change this template use File | Settings | File Templates.
+<%-- 
+    Document   : index
+    Created on : Dec 2, 2015, 3:04:51 AM
+    Author     : sethi
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-  <head>
-    <title></title>
-  </head>
-  <body>
 
-  </body>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+    </body>
 </html>
