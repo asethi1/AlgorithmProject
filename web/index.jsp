@@ -55,14 +55,14 @@ and open the template in the editor.
     var chart = new CanvasJS.Chart("chartContainer",
     {
       title:{
-        text: "Main Vs Other SCC's"
+        text: "Main Vs Other CC's"
       },
       data: [
       {
        type: "pie",
        dataPoints: [
-       {  y: 97.5, indexLabel: "Main SCC - 97.5%" },
-       {  y: 2.5, indexLabel: "Other SCC's - 2.5 %" }
+       {  y: 97.5, indexLabel: "Main CC - 97.5%" },
+       {  y: 2.5, indexLabel: "Other CC's - 2.5 %" }
        ]
        
      }
@@ -196,15 +196,15 @@ and open the template in the editor.
                             <div class="row">
                                 <div class="wow pulse animated" data-wow-delay="300ms" data-wow-duration="2s"
                                      style="visibility: hidden; animation-duration: 2s; animation-delay: 300ms; animation-iteration-count: infinite; animation-name: none;">
-                                    <div class="product_head">Strongly Connected Components (SCCs)</div>
+                                    <div class="product_head">Connected Components (CCs)</div>
                                 </div>
                                 <br><br>
 
                                 <div class="products">
                                     <p>
-                                        In our analysis of the graph, we found that we have a total of 144 SCCs. Out of
-                                        144, one SCC dominated the others in terms of size. The size difference between
-                                        the SCCs has been depicted in the following pie chart.
+                                        In our analysis of the graph, we found that we have a total of 144 CCs. Out of
+                                        144, one CC dominated the others in terms of size. The size difference between
+                                        the CCs has been depicted in the following pie chart.
                                     </p></div>
                                 <br><br>
 
@@ -220,7 +220,7 @@ and open the template in the editor.
 
                                 <div class="products">
                                     <p>
-                                        The line graph below displays degree distribution of the most prominent SCC of
+                                        The line graph below displays degree distribution of the most prominent CC of
                                         our graph representing our experimental dataset. The X-axis represents the
                                         in-degree and the Y-axis represents the number of nodes in consideration.
                                     </p></div>
@@ -230,7 +230,7 @@ and open the template in the editor.
                                     <img src="Images/indegreeVSNodes.png" width="850" height="400" align="middle">
                                 
                                     <p class="products"><br>
-                                        Largest SCC:<br>
+                                        Largest CC:<br>
                                         Total number of nodes: 63392<br>
                                         Total number of edges: 816831<br>
                                         Average degree: 25.77<br>
